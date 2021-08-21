@@ -20,6 +20,7 @@ namespace EduquayAPI.Models.CHCReceipt
         public string shipmentDateTime { get; set; }
         public string shipmentReceivedDate { get; set; }
         public string shipmentId { get; set; }
+        public string testDateTime { get; set; }
         public string testResult { get; set; }
         public string chcShipmentDateTime { get; set; }
         public string chcShipmentId { get; set; }
@@ -61,6 +62,9 @@ namespace EduquayAPI.Models.CHCReceipt
 
             if (CommonUtility.IsColumnExistsAndNotNull(reader, "ShipmentReceivedDate"))
                 this.shipmentReceivedDate = Convert.ToString(reader["ShipmentReceivedDate"]);
+
+            if (CommonUtility.IsColumnExistsAndNotNull(reader, "TestDateTime"))
+                this.testDateTime = Convert.ToString(reader["TestDateTime"]);
 
             if (CommonUtility.IsColumnExistsAndNotNull(reader, "TestResult"))
                 this.testResult = Convert.ToString(reader["TestResult"]);
