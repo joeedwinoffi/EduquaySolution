@@ -4,6 +4,7 @@ using EduquayAPI.Contracts.V1.Response;
 using EduquayAPI.Contracts.V1.Response.AdminSupport;
 using EduquayAPI.Contracts.V1.Response.Support;
 using EduquayAPI.Models.Support;
+using Microsoft.AspNetCore.Http;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -29,6 +30,8 @@ namespace EduquayAPI.Services.Support
         List<LMPErrorReportDetail> FetchLMPErrorReport(ReportRequest rData);
         List<RCHErrorReportDetail> FetchRCHErrorReport(ReportRequest rData);
         List<SSTCorrectionReportDetail> FetchSSTErrorReport(ReportRequest rData);
+
+        Task<UploadFileResponse> UploadCBCHPLCFiles(List<IFormFile> files);
 
     }
 }

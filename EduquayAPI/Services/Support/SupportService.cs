@@ -6,9 +6,11 @@ using EduquayAPI.Contracts.V1.Response.Support;
 using EduquayAPI.DataLayer;
 using EduquayAPI.DataLayer.Support;
 using EduquayAPI.Models.Support;
+using Microsoft.AspNetCore.Http;
 using Microsoft.Extensions.Configuration;
 using System;
 using System.Collections.Generic;
+using System.IO;
 using System.Linq;
 using System.Net;
 using System.Net.Mail;
@@ -762,6 +764,40 @@ namespace EduquayAPI.Services.Support
         {
             var allData = _supportData.FetchSSTErrorReport(rData);
             return allData;
+        }
+
+        public async Task<UploadFileResponse> UploadCBCHPLCFiles(List<IFormFile> files)
+        {
+            var sResponse = new UploadFileResponse();
+            try
+            {
+                var target = _config.GetSection("Key").GetSection("CBCHPLFilesUpload").Value;
+                //Directory.CreateDirectory(target);
+                var fileNames = new List<UploadFiles>();
+                files.ForEach(async file =>
+                {
+                    var uploadFile = new UploadFiles();
+                    if (file.Length <= 0) return;
+                    var filePath = Path.Combine(target, file.FileName);
+                    using (var stream = new FileStream(filePath, FileMode.Create))
+                    {
+                        await file.CopyToAsync(stream);
+                    }
+                    uploadFile.fileName = file.FileName;
+                    fileNames.Add(uploadFile);
+                });
+                sResponse.Status = "true";
+                sResponse.Message = files.Count.ToString() + " - Files Uploaded Successfully";
+                sResponse.fileCount = files.Count;
+                sResponse.data = fileNames;
+                return sResponse;
+            }
+            catch (Exception e)
+            {
+                sResponse.Status = "false";
+                sResponse.Message = $"Unable to send files - {e.Message}";
+                return sResponse;
+            }
         }
     }
 }
