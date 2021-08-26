@@ -382,5 +382,26 @@ namespace EduquayAPI.Controllers
                 Message = data.Message,
             });
         }
+
+
+
+        [HttpPost]
+        [Route("UploadCBCHPLCFiles")]
+        public async Task<IActionResult> UploadCBCHPLFiles(List<IFormFile> formFiles)
+        {
+
+            _logger.LogInformation($"Invoking endpoint: {this.HttpContext.Request.GetDisplayUrl()}");
+            var result = await _supportService.UploadCBCHPLCFiles(formFiles);
+            _logger.LogInformation($"Uploaded Files {result}");
+            _logger.LogDebug($"Response Uploaded Files - {JsonConvert.SerializeObject(result)}");
+            return Ok(new UploadFileResponse
+            {
+                Status = result.Status,
+                Message = result.Message,
+                fileCount = result.fileCount,
+                data = result.data
+            });
+
+        }
     }
 }
