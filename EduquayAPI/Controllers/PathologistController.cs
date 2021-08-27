@@ -195,5 +195,25 @@ namespace EduquayAPI.Controllers
                 SubjectDetails = subjectList.SubjectDetails,
             });
         }
+
+        /// <summary>
+        /// Used for get  reports for Pathologist Diagnosis reslt reports 
+        /// </summary>
+        [HttpPost]
+        [Route("RetrievePathologistReportsDetail")]
+        public async Task<IActionResult> RetrievePathologistReportsDetails(PathologistReportRequest rData)
+        {
+            _logger.LogInformation($"Invoking endpoint: {this.HttpContext.Request.GetDisplayUrl()}");
+            _logger.LogDebug($"Retrieve subject detail for pathologist diagnosis result report- {JsonConvert.SerializeObject(rData)}");
+            var reports = await _pathologistService.RetrivePathologistReportsDetail(rData);
+            _logger.LogInformation($"Fetch Subjects for pathologist diagnosis result report {reports}");
+            return Ok(new PathologistReportResponse
+            {
+                status = reports.status,
+                message = reports.message,
+                data = reports.data,
+            });
+        }
+
     }
 }

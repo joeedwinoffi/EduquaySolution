@@ -17,6 +17,9 @@ namespace EduquayAPI.DataLayer.Pathologist
         List<PathologistSampleStatus> RetrieveSampleStatus();
         List<PathoReports> RetrivePathologistReports(PathoReportsRequest prData);
         List<HPLCDiagnosisDetails> FetchSrPathoHPLCDiagnosisDetail(int centralLabId);
+        List<PathologistReports> RetrieveDiagnosisCompletedDetails(PathologistReportRequest rData);
+        List<PathologistReports> RetrieveDiagnosisPendingDetails(PathologistReportRequest rData);
+        List<PathologistReports> RetrieveSrPathoDiagnosisDetails(PathologistReportRequest rData);
     }
 
     public interface IPathologistDataFactory
