@@ -377,5 +377,45 @@ namespace EduquayAPI.Services.Pathologist
             var allSubject = _pathologistData.RetrivePathologistReports(prData);
             return allSubject;
         }
+
+        public async Task<PathologistReportResponse> RetrivePathologistReportsDetail(PathologistReportRequest rData)
+        {
+            var tResponse = new PathologistReportResponse();
+            try
+            {
+                if (rData.searchSection == 1)
+                {
+                    var result = _pathologistData.RetrieveDiagnosisCompletedDetails(rData);
+                    tResponse.status = "true";
+                    tResponse.message = "";
+                    tResponse.data = result;
+                }
+                else if (rData.searchSection == 2)
+                {
+                    var result = _pathologistData.RetrieveDiagnosisPendingDetails(rData);
+                    tResponse.status = "true";
+                    tResponse.message = "";
+                    tResponse.data = result;
+                }
+                else if (rData.searchSection == 3)
+                {
+                    var result = _pathologistData.RetrieveSrPathoDiagnosisDetails(rData);
+                    tResponse.status = "true";
+                    tResponse.message = "";
+                    tResponse.data = result;
+                }
+                else
+                {
+                    tResponse.status = "false";
+                    tResponse.message = "Please give some valid search section";
+                }
+            }
+            catch (Exception e)
+            {
+                tResponse.status = "false";
+                tResponse.message = e.Message;
+            }
+            return tResponse;
+        }
     }
 }

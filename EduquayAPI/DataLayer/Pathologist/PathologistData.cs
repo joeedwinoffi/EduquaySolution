@@ -20,6 +20,12 @@ namespace EduquayAPI.DataLayer.Pathologist
         private const string FetchPathoDiagnosisReports = "SPC_FetchPathoDiagnosisReports";
         private const string FetchSrPathoReferedSubjectsList = "SPC_FetchSrPathoReferedSubjectsList";
 
+        #region New Reports
+        private const string PathoDiagnosisCompletedReport = "SPC_PathoDiagnosisCompletedReport";
+        private const string PathoDiagnosisPendingReport = "SPC_PathoDiagnosisPendingReport";
+        private const string SrPathoDiagnosisReport = "SPC_SrPathoDiagnosisReport";
+        #endregion
+
         public PathologistData()
         {
 
@@ -107,6 +113,42 @@ namespace EduquayAPI.DataLayer.Pathologist
             return allSampleData;
         }
 
+        public List<PathologistReports> RetrieveDiagnosisCompletedDetails(PathologistReportRequest rData)
+        {
+            string stProc = PathoDiagnosisCompletedReport;
+            var pList = new List<SqlParameter>()
+            {
+                new SqlParameter("@FromDate", rData.fromDate),
+                new SqlParameter("@ToDate", rData.toDate),
+                new SqlParameter("@SubjectType", rData.subjectType),
+                new SqlParameter("@CentralLabID", rData.centralLabId),
+                new SqlParameter("@CHCID", rData.chcId),
+                new SqlParameter("@PHCID", rData.phcId),
+                new SqlParameter("@ANMID", rData.anmId),
+                new SqlParameter("@Status", rData.status)
+            };
+            var allData = UtilityDL.FillData<PathologistReports>(stProc, pList);
+            return allData;
+        }
+
+        public List<PathologistReports> RetrieveDiagnosisPendingDetails(PathologistReportRequest rData)
+        {
+            string stProc = PathoDiagnosisPendingReport;
+            var pList = new List<SqlParameter>()
+            {
+                new SqlParameter("@FromDate", rData.fromDate),
+                new SqlParameter("@ToDate", rData.toDate),
+                new SqlParameter("@SubjectType", rData.subjectType),
+                new SqlParameter("@CentralLabID", rData.centralLabId),
+                new SqlParameter("@CHCID", rData.chcId),
+                new SqlParameter("@PHCID", rData.phcId),
+                new SqlParameter("@ANMID", rData.anmId),
+                new SqlParameter("@Status", rData.status)
+            };
+            var allData = UtilityDL.FillData<PathologistReports>(stProc, pList);
+            return allData;
+        }
+
         public List<PathologistSampleStatus> RetrieveSampleStatus()
         {
             string stProc = FetchPathologistSampleStatus;
@@ -114,6 +156,24 @@ namespace EduquayAPI.DataLayer.Pathologist
 
             var allSampleStatus = UtilityDL.FillData<PathologistSampleStatus>(stProc, pList);
             return allSampleStatus;
+        }
+
+        public List<PathologistReports> RetrieveSrPathoDiagnosisDetails(PathologistReportRequest rData)
+        {
+            string stProc = SrPathoDiagnosisReport;
+            var pList = new List<SqlParameter>()
+            {
+                new SqlParameter("@FromDate", rData.fromDate),
+                new SqlParameter("@ToDate", rData.toDate),
+                new SqlParameter("@SubjectType", rData.subjectType),
+                new SqlParameter("@CentralLabID", rData.centralLabId),
+                new SqlParameter("@CHCID", rData.chcId),
+                new SqlParameter("@PHCID", rData.phcId),
+                new SqlParameter("@ANMID", rData.anmId),
+                new SqlParameter("@Status", rData.status)
+            };
+            var allData = UtilityDL.FillData<PathologistReports>(stProc, pList);
+            return allData;
         }
 
         public List<PathoReports> RetrivePathologistReports(PathoReportsRequest prData)
