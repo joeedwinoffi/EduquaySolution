@@ -1,0 +1,16 @@
+{
+    "sqltools.connections": [
+        {
+            "mysqlOptions": {
+                "authProtocol": "default"
+            },
+            "previewLimit": 50,
+            "server": "localhost",
+            "port": 3306,
+            "askForPassword": true,
+            "driver": "MySQL",
+            "connectString": "Data Source=DESKTOP-5PE6N7G\\SQLEXPRESS;Initial Catalog=TSCOD;Integrated Security=True",
+            "name": "EASU"
+        }
+    ]
+}
